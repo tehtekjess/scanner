@@ -66,7 +66,11 @@ namespace virus_scanner
 
         public void scan()
         {
-            IntPtr addr = IntPtr.Zero;
+            if (!IsProcessOpen)
+                throw new InvalidOperationException("Must open process before scanning.");
+
+            IntPtr addr = Process.MainModule.BaseAddress;
+            
             do
             {
                 MEMORY_BASIC_INFORMATION info = new MEMORY_BASIC_INFORMATION();
