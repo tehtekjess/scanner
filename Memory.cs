@@ -112,6 +112,18 @@ namespace virus_scanner
             }
         }
 
+        public int TryReadBytes(IntPtr address, int size, Memory<byte> memory) {
+            if (MemoryMarshal.TryGetArray<byte>(memory, out var arraySegment)) {
+                IntPtr read = IntPtr.Zero;
+
+                if (ReadProcessMemory(ProcessHandle, address, arraySegment.Array, size, ref read)){
+                    return read.ToInt32();
+                }
+            }
+
+            return 0;
+        }
+
         public byte[] ReadBytes(IntPtr Address, int Size)
         {
             IntPtr Read = IntPtr.Zero;
