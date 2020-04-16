@@ -77,7 +77,7 @@ namespace virus_scanner
                 uint query_return = VirtualQueryEx(this.ProcessHandle, addr, out info, Marshal.SizeOf(info));
                 if (query_return == 0)
                 {
-                    addr += 4096;
+                    addr += Environment.SystemPageSize;
                     continue;
                 }
 
